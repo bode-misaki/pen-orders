@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<link href="/css/thread.css" th:href="@{/css/thread.css}" rel="stylesheet"></link>
+<meta charset="UTF-8">
+<title>編集</title>
+</head>
+	<h1>へんしゅう</h1>
+	<body>
+		
+			<div th:object="${entity}">
+				<p th:inline="text">ID: [[${entity.id}]]</p>
+			
+				<form method="POST">
+				<p>名前:<br><input type="text" name="name" placeholder="ニックネーム" th:value="${entity.name}"><br></p>
+				<div th:if="${form}" th:object="${form}">
+					<label th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></label>			
+				</div>
+			
+				<p>メッセージ:<br><input type="text" name="message" placeholder="メッセージ" th:value="${entity.message}"><br></p>
+				<div th:if="${form}" th:object="${form}">
+					<label th:if="${#fields.hasErrors('message')}" th:errors="*{message}"></label>
+				</div>
+			
+				<input type="submit" class="button" formaction="/edit" value="編集実行"><br>
+				<input type="hidden" name="id" th:value="${entity.id}">
+				</form>
+			</div>
+		
+	</body>
+</html>

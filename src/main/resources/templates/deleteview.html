@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<link href="/css/thread.css" th:href="@{/css/thread.css}" rel="stylesheet"></link>
+<meta charset="UTF-8">
+<title>削除</title>
+</head>
+	<h1>さくじょ</h1>
+	<body>
+		<div th:object="${entity}">
+			<form method="POST">
+				<p>ID:<span th:text="${entity.id}"></span></p>
+				<p>名前:<span th:text="${entity.name}"></span></p>
+				<p>メッセージ:<span th:text="${entity.message}"></span></p>
+				<hr>
+				<p>この記事を本当に削除しますか？
+			<input type="submit" class="button" formaction="/yes_button"value="Yes">
+			<input type="submit" class="button" formaction="/no_button"value="No">
+			<input type="hidden"name="id" th:value="${entity.id}">
+		</form>
+		</div>
+	</body>
+</html>

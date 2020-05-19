@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="/js/js.js"></script>
+<link href="/css/thread.css" th:href="@{/css/thread.css}" rel="stylesheet"></link>
+<meta charset="UTF-8">
+<title>掲示板</title>
+</head>
+	<body>
+	<header>
+	<nav>
+		<ul>
+		<li><h1>掲示板</h1></li>
+		<li><a th:href="@{regist}">書込み</a></li>
+		<li><a href=#>自己紹介</a></li>
+		<li><a href=#>私の会社</a></li>
+		</ul>
+	</nav>
+	</header>
+	<div id="container">
+		<div class="box1">
+			<h3>検索</h3>
+			<form method="POST">
+			<p>名前:<br><input type="text" name="searchName" placeholder="検索したい名前" class="textbox"><br></p>
+			<p>メッセージ:<br><input type="text" name="searchMessage" placeholder="検索したいメッセージ"class="textbox"><br></p>
+			<input type="submit" formaction="/top"value="検索" class="button"><br>
+			</form>
+		</div>
+		
+	<div class="box2" th:object="${entityList}">
+		<div th:each="entity : ${entityList}">
+			<form method="POST">
+			<table>
+				<tbody>
+					<tr>
+						<td>ID</td>
+						<td th:inline="text">: [[${entity.id}]]</td>
+					</tr>
+					<tr>
+						<td>名前</td>
+						<td th:inline="text"> : [[${entity.name}]]</td>
+					</tr>
+					<tr>
+						<td>メッセージ</td>
+						<td th:inline="text"> : [[${entity.message}]]</td>
+					</tr>
+				</tbody>
+			</table>
+			<Hr>
+			<input type="hidden"name="id" th:value="${entity.id}">
+			<div class="buttons">
+			<input type="submit" formaction="/edit_button" value="編集" class="button">
+			<input type="submit" formaction="/delete_button"value="削除" class="button">
+			<input type="submit" formaction="/reply_button"value="リプ" class="button"><br>
+			</div>
+			</form>
+				</div>
+   			 <ul class="pagenation">
+     			   <li>
+    	    		   <!-- 現在のURLに引数でページ番号を指定 -->
+    	    		    <a th:if="${entityList.number}!=0" th:href="@{${url}(page=0)}"><button>←先頭</button></a>
+   		  		   </li>
+    				    <!-- #numbers.sequence(0, 総ページ数)で0から総ページ数までループする -->
+     			  <li th:each="i : ${#numbers.sequence(0, entityList.totalPages-1)}">
+         			   <!-- 現在のページをテキスト表示(リンクにしてない) -->
+        	   	 <button th:if="${i}==${entityList.number}" id="now" th:text="${i + 1}"></button>
+          			  <!-- その他のページをテキスト表示(リンクにしている) -->
+         		   <a th:if="${i}!=${entityList.number}" th:href="@{${url}(page=${i})}" 
+        		  	  th:inline="text"><button>[[${i + 1}]]</button></a>
+     			   </li>
+     			   <li>
+      			      <!-- 現在のURLに引数でページ番号を指定 -->
+      	 		     <a th:if="${entityList.number}!=(${entityList.totalPages}-1)" th:href="@{${url}(page=(${entityList.totalPages}-1))}"><button>末尾➝</button></a>
+     			   </li>
+  			 </ul>
+		 
+	 </div>
+	 <div>
+	 <!-- くうかん -->
+	 </div>
+	 
+	 </div>
+	<footer>
+		<div class="footerbox">
+			<div>
+				<ul>
+					<li><a href=#>書き込み</a></li>
+					<li><a href=#>自己紹介</a></li>
+					<li><a href=#>私の会社</a></li>
+				</ul>
+			</div>
+			<div>
+				<ul>
+					<li><a href=#>特集ページ</a></li>
+					<li><a href=#>お問い合わせ</a></li>
+				</ul>
+			</div>
+		</div>
+	<p>Copyright © BBS Company All Rights Reserved.</p>
+	</footer>
+	
+  </body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<link href="/css/thread.css" th:href="@{/css/thread.css}" rel="stylesheet"></link>
+<meta charset="UTF-8">
+<title>reply</title>
+</head>
+	<h1>コメント</h1>
+	<body>
+		
+			<form method="POST">
+				
+				<div th:object="${replyEntity}">
+					<p>ID:<span th:text="${replyEntity.id}"></span></p>
+					<p>名前:<span th:text="${replyEntity.name}"></span></p>
+					<p>メッセージ:<span th:text="${replyEntity.message}"></span></p>
+					<hr size="5">
+				
+					<div th:each="entity : ${replyEntity.replyEntity}">
+						<p th:inline="text">名前: [[${entity.name}]]</p>
+						<p th:inline="text">コメント: [[${entity.comment}]]</p>
+						<hr>
+					</div>
+						<input type="hidden"name="id" th:value="${replyEntity.id}">
+						<input type="submit" class="button" formaction="no_button"value="もどる">
+				</div>
+		</form>
+		
+	</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<link href="/css/thread.css" th:href="@{/css/thread.css}" rel="stylesheet"></link>
+<meta charset="UTF-8">
+<title>新規投稿</title>
+</head>
+	<h1>とうこう</h1>
+	<body>
+		<form method="POST">
+			<p>名前:<br><input type="text" name="name" placeholder="ニックネーム" class=textbox><br></p>
+			<div th:if="${form}" th:object="${form}">
+				<label th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></label>			
+			</div>
+			
+			<p>メッセージ:<br><input type="text" name="message" placeholder="メッセージ" class=textbox><br></p>
+			<div th:if="${form}" th:object="${form}">
+				<label th:if="${#fields.hasErrors('message')}" th:errors="*{message}"></label>
+			</div>
+			<input type="submit" formaction="/regist_button"value="とうこう"><br>
+		</form>
+	</body>
+</html>
